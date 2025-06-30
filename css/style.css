@@ -80,14 +80,10 @@ img{
   font-family: 'Times New Roman', Times, serif;
   background-color: #6e6e6e;
   border-radius: 10px;
-}
-.result{
-  width: 32px;
-  color: black;
-  font-weight: 500;
-  font-family: 'Times New Roman', Times, serif;
-  background-color: #fff;
-  border-radius: 10px;
+  &:active{
+    color: black;
+    background-color: #fff;
+  }
 }
 .music-title{
   color: #fff;
@@ -120,7 +116,7 @@ img{
 }
 .cover {
   border-radius: 50%;
-  animation: cover 10s linear infinite;
+  animation: cover 20s linear infinite;
   animation-play-state: paused;
 }
 

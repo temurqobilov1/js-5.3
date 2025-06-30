@@ -17,15 +17,6 @@ const speed2 = document.getElementById("speed2")
 const speed3 = document.getElementById("speed3") 
 const speed4 = document.getElementById("speed4")
 
-const speeds = document.querySelectorAll("fast")
-
-speeds.forEach((button)=>{
-  button.addEventListener("click",()=>{
-    speeds.forEach((btn)=>btn.classList.remove("result"));
-    button.classList.add("result");
-  });
-});
-
 speed1.addEventListener("click", () => {
   audio.playbackRate = 0.5
 })
