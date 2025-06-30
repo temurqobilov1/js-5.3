@@ -53,7 +53,7 @@ const songs = [
   "Nadyr - Ismigul",
 ];
 
-let currentPlaySong = 4;
+let currentPlaySong = 0;
 
 function changeSong(current){
   audio.src = `../audios/${songs[current]}.mp3`;
