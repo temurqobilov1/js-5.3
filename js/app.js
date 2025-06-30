@@ -12,6 +12,33 @@ const cover = document.querySelector("#cover");
 const musicTitle = document.querySelector("#music-title");
 const durationEl = document.querySelector("#duration");
 const currentTimeEl = document.querySelector("#current-time")
+const speed1 = document.getElementById("speed1") 
+const speed2 = document.getElementById("speed2") 
+const speed3 = document.getElementById("speed3") 
+const speed4 = document.getElementById("speed4")
+
+const speeds = document.querySelectorAll("fast")
+
+speeds.forEach((button)=>{
+  button.addEventListener("click",()=>{
+    speeds.forEach((btn)=>btn.classList.remove("result"));
+    button.classList.add("result");
+  });
+});
+
+speed1.addEventListener("click", () => {
+  audio.playbackRate = 0.5
+})
+speed2.addEventListener("click", () => {
+  audio.playbackRate = 1
+})
+speed3.addEventListener("click", () => {
+  audio.playbackRate = 1.5
+})
+speed4.addEventListener("click", () => {
+  audio.playbackRate = 2
+})
+
 
 
 audio.addEventListener("loadeddata", ()=> {
@@ -35,7 +62,7 @@ const songs = [
   "Nadyr - Ismigul",
 ];
 
-let currentPlaySong = 1;
+let currentPlaySong = 4;
 
 function changeSong(current){
   audio.src = `../audios/${songs[current]}.mp3`;
