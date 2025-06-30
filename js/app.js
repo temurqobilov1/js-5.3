@@ -3,12 +3,90 @@ const forwardBtn = document.querySelector("#forward");
 const backgwordBtn = document.querySelector("#backward");
 const progressContainer = document.querySelector(".progress-container");
 const progressEl = document.querySelector(".progress");
-const audio = document.querySelector("audio");
 const container = document.querySelector(".container");
 const volumeChanger = document.querySelector("#volume-changer");
+const volum = document.querySelector("#volum");
+const muteBtn = document.querySelector("#mute")
+const audio = document.querySelector("audio");
+const cover = document.querySelector("#cover");
+const musicTitle = document.querySelector("#music-title");
+const durationEl = document.querySelector("#duration");
+const currentTimeEl = document.querySelector("#current-time")
 
-function play() {
-  audio.volume = 0.1;
+
+audio.addEventListener("loadeddata", ()=> {
+  const duration = audio.duration;
+  const minutes = String((duration - (duration % 60)) / 60);
+  const seconds = String( parseInt(duration % 60));
+  let time =
+  `
+  ${+minutes < 10 ? `${minutes.padStart(2,0)}`:minutes} :
+  ${+seconds < 10 ? `${seconds.padStart(2,0)}`:seconds}
+  `
+  durationEl.textContent = time;
+  currentTimeEl.textContent = time;
+})
+
+const songs = [
+  "Weeknd - Blinding Lights",
+  "Munisa Rizayeva - Jonginam",
+  "Muhammadziyo Anvarov - Bir somi yoq boyvachcha",
+];
+
+let currentPlaySong = 1;
+
+function changeSong(current){
+  audio.src = `../audios/${songs[current]}.mp3`;
+  cover.src = `../images/${songs[current]}.png`;
+  musicTitle.textContent = songs[current];
+}
+
+changeSong(currentPlaySong);
+
+
+function nextSong() {
+  if (currentPlaySong < songs.length-1){
+    currentPlaySong++;
+  }else{
+    currentPlaySong = 0;
+  }
+  changeSong(currentPlaySong)
+  play()
+}
+function prevSong() {
+  if (currentPlaySong > 0){
+    currentPlaySong--;
+  }else{
+    currentPlaySong = songs.length-1;
+  }
+  changeSong(currentPlaySong)
+  play()
+}
+
+audio.volume = +volumeChanger.value / 100;
+volum.textContent = +volumeChanger.value;
+
+function mute() {
+  audio.volume = 0;
+  container.classList.add("voise");
+  muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+}
+function unmute() {
+  audio.volume = +volumeChanger.value / 100;
+  container.classList.remove("voise");
+  muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+}
+
+function musicMute(){
+  const isMute = container.classList.contains("voise");
+  if(isMute){
+    unmute()
+  }else{
+    mute()
+  }
+}
+
+function play() { 
   audio.play();
   container.classList.add("play");
   playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
@@ -32,6 +110,21 @@ function musicPlay() {
 function progress() {
   const duration = audio.duration;
   const currentTime = audio.currentTime;
+
+  const decresingTime = isNaN(duration - currentTime)
+    ? 0
+    : duration - currentTime
+
+    const minutes = String((decresingTime - (decresingTime % 60)) / 60);
+    const seconds = String(parseInt(decresingTime % 60));
+    let time = `
+  ${+minutes < 10 ? `${minutes.padStart(2, 0)}` : minutes} :
+  ${+seconds < 10 ? `${seconds.padStart(2, 0)}` : seconds}
+  `;
+
+  currentTimeEl.textContent = time;
+
+
   const p = (currentTime / duration) * 100;
   progressEl.style.width = `${p}%`;
 }
@@ -42,9 +135,16 @@ function changeTime(e) {
   audio.currentTime = currentTime;
 }
 
+function volumechange(){
+  audio.volume = +volumeChanger.value / 100;
+  volum.textContent = +volumeChanger.value;
+}
+
 playBtn.addEventListener("click", musicPlay);
 audio.addEventListener("timeupdate", progress);
 progressContainer.addEventListener("click", changeTime);
-volumeChanger.addEventListener("input", () => {
-  audio.volume = +volumeChanger.value / 100;
-});
+volumeChanger.addEventListener("input", volumechange);
+audio.addEventListener("ended", nextSong)
+backgwordBtn.addEventListener("click", prevSong)
+forwardBtn.addEventListener("click", nextSong)
+muteBtn.addEventListener("click", musicMute)
