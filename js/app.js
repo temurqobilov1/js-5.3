@@ -31,6 +31,8 @@ const songs = [
   "Weeknd - Blinding Lights",
   "Munisa Rizayeva - Jonginam",
   "Muhammadziyo Anvarov - Bir so'mi yo'q",
+  "Billie Eilish - Wildflower",
+  "Nadyr - Ismigul",
 ];
 
 let currentPlaySong = 1;
