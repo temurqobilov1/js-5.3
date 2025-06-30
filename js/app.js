@@ -30,7 +30,7 @@ audio.addEventListener("loadeddata", ()=> {
 const songs = [
   "Weeknd - Blinding Lights",
   "Munisa Rizayeva - Jonginam",
-  "Muhammadziyo Anvarov - Bir somi yoq boyvachcha",
+  "Muhammadziyo Anvarov - Bir so'mi yo'q",
 ];
 
 let currentPlaySong = 1;
